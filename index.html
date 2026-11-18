@@ -98,7 +98,7 @@
 </div>
 
 <script>
-const DADOS = {"itens": [{"num": 1, "nome": "Torneira flexível 360° com chuveirinho", "categoria": "Utensílios", "loja": "Shopee", "link": "https://s.shopee.com.br/7VI4aEqaFz", "imagem": "https://down-br.img.susercontent.com/file/sg-11134201-8258e-mt4uwt4gdh4x78", "adicionado": "2026-11-18"}], "categorias": ["Utensílios"]};
+const DADOS = {"itens": [], "categorias": []};
 const lista = document.getElementById('lista');
 const chips = document.getElementById('chips');
 const q = document.getElementById('q');
@@ -125,6 +125,11 @@ function render(){
     if (ehNumero) return String(a.num) === termo;
     return sem(a.nome + ' ' + a.categoria + ' ' + a.loja).includes(termo);
   });
+  if (!DADOS.itens.length){
+    contagem.textContent = '';
+    lista.innerHTML = '<p class="vazio">Os primeiros achadinhos chegam em breve 🧡<br>Me segue no Instagram pra não perder!</p>';
+    return;
+  }
   contagem.textContent = itens.length === 1 ? '1 achadinho' : itens.length + ' achadinhos';
   if (!itens.length){
     lista.innerHTML = '<p class="vazio">Não achei esse achadinho 😕<br>Confere o número ou tenta outra palavra.</p>';
