@@ -170,9 +170,9 @@ button:focus-visible{outline:4px solid var(--ciano);outline-offset:6px}
   let rodando=false;
   async function roteiro(){
     if(rodando)return;rodando=true;denovo.hidden=true;
-    try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.resume()}catch(e){ac=null}
-    try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen()}catch(e){}
-    try{await navigator.wakeLock?.request('screen')}catch(e){}
+    try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();var pr=ac.resume();if(pr&&pr.catch)pr.catch(function(){})}catch(e){ac=null}
+    try{var el=document.documentElement,fs=el.requestFullscreen||el.webkitRequestFullscreen;if(fs&&!document.fullscreenElement){var q=fs.call(el);if(q&&q.catch)q.catch(function(){})}}catch(e){}
+    try{if(navigator.wakeLock){navigator.wakeLock.request('screen').catch(function(){})}}catch(e){}
     mostra(1);nota(392,0,.5,'triangle',.12);nota(523,.25,.6,'triangle',.12);
     await espera(4200);
     mostra(2);
@@ -183,7 +183,7 @@ button:focus-visible{outline:4px solid var(--ciano);outline-offset:6px}
     if(!reduz){soltando=true;solta(140);anima();setTimeout(()=>soltando=false,9000)}
     await espera(4000);denovo.hidden=false;rodando=false;
   }
-  document.getElementById('comecar').addEventListener('click',roteiro);
+  var bt=document.getElementById('comecar');bt.addEventListener('click',roteiro);bt.addEventListener('touchend',function(e){e.preventDefault();roteiro()});
   denovo.addEventListener('click',roteiro);
   addEventListener('resize',()=>{tam();if(reduz)desenha()});
   tam();desenha();
