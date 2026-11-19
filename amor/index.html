@@ -185,6 +185,9 @@ button:focus-visible{outline:4px solid var(--ciano);outline-offset:6px}
   }
   var bt=document.getElementById('comecar');bt.addEventListener('click',roteiro);bt.addEventListener('touchend',function(e){e.preventDefault();roteiro()});
   denovo.addEventListener('click',roteiro);
+  document.getElementById('c0').addEventListener('click',function(e){if(e.target!==bt)roteiro()});
+  addEventListener('keydown',function(e){if(!document.getElementById('c0').classList.contains('fora')&&(e.key==='Enter'||e.key===' '||e.keyCode===13)){e.preventDefault();roteiro()}});
+  setTimeout(function(){try{bt.focus()}catch(e){}},300);
   addEventListener('resize',()=>{tam();if(reduz)desenha()});
   tam();desenha();
 })();
